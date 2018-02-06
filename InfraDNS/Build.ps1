@@ -75,7 +75,7 @@ Task Bar -depends InstallModules {
     "Starting task Bar..."
 }
 
-Task UnitTests -Depends ScriptAnalysis {
+Task BLIZZ -Depends ScriptAnalysis {
     # Run Unit Tests with Code Coverage
     "Starting unit tests..."
  
