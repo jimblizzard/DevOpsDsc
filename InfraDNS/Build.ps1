@@ -84,8 +84,9 @@ Task UnitTests -Depends ScriptAnalysis {
     
 }
 
-Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
-    # Compile Configurations...
+Task CompileConfigs -Depends UnitTests {
+  # blizz OLD:  Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
+        # Compile Configurations...
     "Starting to compile configuration..."
     . "$ConfigPath\DNSServer.ps1"
 
