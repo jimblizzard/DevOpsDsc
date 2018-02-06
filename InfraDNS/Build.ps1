@@ -83,7 +83,7 @@ Task UnitTests -Depends ScriptAnalysis {
     }
      
 }
-Task FOO -depends UnitTests {
+Task FOO -depends InstallModules {
     "Starting task foo..."
 }
 
