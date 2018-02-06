@@ -39,7 +39,7 @@ Task DeployModules -Depends Clean {
     # This task uses push to deploy resource modules to target nodes. This task could be used to package up and deploy resources to DSC pull server instead.
     "Deploying resources to target nodes..."
 
-    $Session = New-PSSession -ComputerName TestAgent1
+    $Session = New-PSSession -ComputerName bliztestagent1
 
     $ModulePath = "$env:ProgramFiles\WindowsPowerShell\Modules\"
     $ModuleArtifacts = "$ModuleArtifactPath"
@@ -58,7 +58,7 @@ Task DeployConfigs -Depends DeployModules {
 Task IntegrationTests -Depends DeployConfigs {
     "Starting Integration tests..."
     #Run Integration tests on target node
-    $Session = New-PSSession -ComputerName TestAgent1
+    $Session = New-PSSession -ComputerName bliztestagent1
 
     #Create a folder to store test script on remote node
     Invoke-Command -Session $Session -ScriptBlock { $null = new-item \Tests\ -ItemType Directory -Force }
@@ -98,7 +98,7 @@ Task Clean {
         New-Item $TestResultsPath -ItemType Directory -Force
 
         #Remove modules from target node
-        $Session = New-PSSession -ComputerName TestAgent1
+        $Session = New-PSSession -ComputerName bliztestagent1
         $RequiredModules = @()
         dir $ModuleArtifactPath -Directory | %{$RequiredModules += @{Name="$($_.Name)";Version="$(dir $ModuleArtifactPath\$($_.Name))"}}
 
