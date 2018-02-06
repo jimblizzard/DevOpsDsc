@@ -88,7 +88,7 @@ Task CompileConfigs -Depends UnitTests {
   # blizz OLD:  Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
         # Compile Configurations...
     "Starting to compile configuration..."
-    . "$ConfigPath\DNSServer.ps1"
+   # blizz put this back in . "$ConfigPath\DNSServer.ps1"
 
     # blizz OLD: DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
     # DNSServer -ConfigurationData "..\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
