@@ -96,17 +96,6 @@ Task FOO -depends InstallModules {
     "Starting task foo..."
 }
 
-#Task CompileConfigs -Depends UnitTests {
-  # blizz OLD:  Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
-        # Compile Configurations...
- #   "Starting to compile configuration..."
-   # blizz put this back in . "$ConfigPath\DNSServer.ps1"
-
-    # blizz OLD: DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
-    # DNSServer -ConfigurationData "..\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
-    # Build steps for other environments can follow here.
-#}
-
 Task Clean {
     "Starting Cleaning enviroment..."
     #Make sure output path exist for MOF and Module artifiacts
