@@ -78,7 +78,7 @@ Task Bar -depends InstallModules {
 Task UnitTests -Depends ScriptAnalysis {
     # Run Unit Tests with Code Coverage
     "Starting unit tests..."
-
+ 
     $PesterResults = Invoke-Pester -path "$TestsPath\Unit\"  -CodeCoverage "$ConfigPath\*.ps1" -OutputFile "$TestResultsPath\UnitTest.xml" -OutputFormat NUnitXml -PassThru
     
     if($PesterResults.FailedCount) #If Pester fails any tests fail this task
