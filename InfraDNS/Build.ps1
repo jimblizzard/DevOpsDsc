@@ -83,6 +83,9 @@ Task UnitTests -Depends ScriptAnalysis {
     }
      
 }
+Task FOO -depends UnitTests {
+    "Starting task foo..."
+}
 
 Task CompileConfigs -Depends UnitTests {
   # blizz OLD:  Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
