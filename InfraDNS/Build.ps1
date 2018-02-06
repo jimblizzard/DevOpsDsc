@@ -71,6 +71,10 @@ Task ScriptAnalysis -Depends InstallModules {
 
 }
 
+Task Bar -depends InstallModules {
+    "Starting task Bar..."
+}
+
 Task UnitTests -Depends ScriptAnalysis {
     # Run Unit Tests with Code Coverage
     "Starting unit tests..."
@@ -83,20 +87,21 @@ Task UnitTests -Depends ScriptAnalysis {
     }
      
 }
+
 Task FOO -depends InstallModules {
     "Starting task foo..."
 }
 
-Task CompileConfigs -Depends UnitTests {
+#Task CompileConfigs -Depends UnitTests {
   # blizz OLD:  Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
         # Compile Configurations...
-    "Starting to compile configuration..."
+ #   "Starting to compile configuration..."
    # blizz put this back in . "$ConfigPath\DNSServer.ps1"
 
     # blizz OLD: DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
     # DNSServer -ConfigurationData "..\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
     # Build steps for other environments can follow here.
-}
+#}
 
 Task Clean {
     "Starting Cleaning enviroment..."
