@@ -34,7 +34,7 @@ Properties {
     $RequiredModules = @(@{Name='xDnsServer';Version='1.7.0.0'}, @{Name='xNetworking';Version='2.9.0.0'}) 
 }
 
-Task Default -depends UnitTests
+Task Default -depends BLIZZ
 
 Task GenerateEnvironmentFiles -Depends Clean {
      Exec {& $PSScriptRoot\DevEnv.ps1 -OutputPath $ConfigPath}
