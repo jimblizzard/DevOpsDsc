@@ -91,7 +91,7 @@ Task CompileConfigs -Depends UnitTests {
     . "$ConfigPath\DNSServer.ps1"
 
     # blizz OLD: DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
-    DNSServer -ConfigurationData "..\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
+    # DNSServer -ConfigurationData "..\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
     # Build steps for other environments can follow here.
 }
 
