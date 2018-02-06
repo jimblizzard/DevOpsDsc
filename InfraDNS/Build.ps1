@@ -40,11 +40,7 @@ Task GenerateEnvironmentFiles -Depends Clean {
      Exec {& $PSScriptRoot\DevEnv.ps1 -OutputPath $ConfigPath}
 }
 
-Task Bar -Depends Clean {
-    "Starting task Bar..."
-   if ($true)
-   {}
-}
+Task Bar -Depends Clean, BLIZZ
 
 
 Task InstallModules -Depends GenerateEnvironmentFiles {
@@ -92,9 +88,7 @@ Task BLIZZ -Depends ScriptAnalysis {
      
 }
 
-Task FOO -depends InstallModules {
-    "Starting task foo..."
-}
+Task FOO -depends InstallModules 
 
 Task Clean {
     "Starting Cleaning enviroment..."
