@@ -46,14 +46,14 @@ Describe "DNSServer Configuration" {
             (Get-ChildItem -Path $OutputPath -File -Filter "*.mof" -Recurse ).count | Should be 1
         }
         
-        It "Should generate a mof file with the name 'TestAgent1'." {
+        It "Should generate a mof file with the name 'bliztestagent1'." {
             DNSServer -ConfigurationData "$configPath\DevEnv.psd1" -OutputPath $OutputPath 
-            Join-Path $OutputPath "TestAgent1.mof" | Should Exist
+            Join-Path $OutputPath "bliztestagent1.mof" | Should Exist
         }
         
         It "Should generate a new version (2.0) mof document." {
             DNSServer -ConfigurationData "$configPath\DevEnv.psd1" -OutputPath $OutputPath 
-            Join-Path $OutputPath "TestAgent1.mof" | Should Contain "Version=`"2.0.0`""
+            Join-Path $OutputPath "bliztestagent1.mof" | Should Contain "Version=`"2.0.0`""
         }
         
         #Clean up TestDrive between each test
