@@ -40,6 +40,13 @@ Task GenerateEnvironmentFiles -Depends Clean {
      Exec {& $PSScriptRoot\DevEnv.ps1 -OutputPath $ConfigPath}
 }
 
+Task Bar -Depends Clean {
+    "Starting task Bar..."
+   if ($true)
+   {}
+}
+
+
 Task InstallModules -Depends GenerateEnvironmentFiles {
     # Install resources on build agent
     "Installing required resources..."
@@ -71,10 +78,6 @@ Task ScriptAnalysis -Depends InstallModules {
 
 }
 
-Task Bar -depends InstallModules {
-    "Starting task Bar..."
-    Invoke-ScriptAnalyzer -Path $ConfigPath
-}
 
 Task BLIZZ -Depends ScriptAnalysis {
     # Run Unit Tests with Code Coverage
