@@ -1,4 +1,3 @@
-
 Import-Module psake
 
 function Invoke-TestFailure
@@ -22,6 +21,8 @@ function Invoke-TestFailure
     Throw $errorRecord
 }
 
+# this is a complete do over
+
 FormatTaskName "--------------- {0} ---------------"
 
 Properties {
@@ -34,26 +35,64 @@ Properties {
     $RequiredModules = @(@{Name='xDnsServer';Version='1.7.0.0'}, @{Name='xNetworking';Version='2.9.0.0'}) 
 }
 
-Task Default -depends BLIZZ
+Task Default -depends UnitTests
 
 Task GenerateEnvironmentFiles -Depends Clean {
      Exec {& $PSScriptRoot\DevEnv.ps1 -OutputPath $ConfigPath}
 }
 
-Task Bar -Depends Clean, BLIZZ
+Task InstallModules -Depends GenerateEnvironmentFiles {
+    # Install resources on build agent
+    "Installing required resources..."
 
-Task BLIZZ 
-{
-    "testing 1, 2, 3."
+    #Workaround for bug in Install-Module cmdlet
+    if(!(Get-PackageProvider -Name NuGet -ListAvailable -ErrorAction Ignore))
+    {
+        Install-PackageProvider -Name NuGet -Force
+    }
+    
+    if (!(Get-PSRepository -Name PSGallery -ErrorAction Ignore))
+    {
+        Register-PSRepository -Name PSGallery -SourceLocation https://www.powershellgallery.com/api/v2/ -InstallationPolicy Trusted -PackageManagementProvider NuGet
+    }
+    
+    #End Workaround
+    
+    foreach ($Resource in $RequiredModules)
+    {
+        Install-Module -Name $Resource.Name -RequiredVersion $Resource.Version -Repository 'PSGallery' -Force
+        Save-Module -Name $Resource.Name -RequiredVersion $Resource.Version -Repository 'PSGallery' -Path $ModuleArtifactPath -Force
+    }
 }
 
+Task ScriptAnalysis -Depends InstallModules {
+    # Run Script Analyzer
+    "Starting static analysis..."
+    Invoke-ScriptAnalyzer -Path $ConfigPath
 
+}
 
+Task UnitTests -Depends ScriptAnalysis {
+    # Run Unit Tests with Code Coverage
+    "Starting unit tests..."
 
-Task FOO -depends BLIZZ
-{
-    "this is FOO..."
-} 
+    $PesterResults = Invoke-Pester -path "$TestsPath\Unit\"  -CodeCoverage "$ConfigPath\*.ps1" -OutputFile "$TestResultsPath\UnitTest.xml" -OutputFormat NUnitXml -PassThru
+    
+    if($PesterResults.FailedCount) #If Pester fails any tests fail this task
+    {
+        Invoke-TestFailure -TestType Unit -PesterResults $PesterResults
+    }
+    
+}
+
+Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
+    # Compile Configurations...
+    "Starting to compile configuration..."
+    . "$ConfigPath\DNSServer.ps1"
+
+    DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
+    # Build steps for other environments can follow here.
+}
 
 Task Clean {
     "Starting Cleaning enviroment..."
