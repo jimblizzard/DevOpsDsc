@@ -73,6 +73,7 @@ Task ScriptAnalysis -Depends InstallModules {
 
 Task Bar -depends InstallModules {
     "Starting task Bar..."
+    Invoke-ScriptAnalyzer -Path $ConfigPath
 }
 
 Task BLIZZ -Depends ScriptAnalysis {
