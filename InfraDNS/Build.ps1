@@ -42,53 +42,18 @@ Task GenerateEnvironmentFiles -Depends Clean {
 
 Task Bar -Depends Clean, BLIZZ
 
-
-Task InstallModules -Depends GenerateEnvironmentFiles {
-    # Install resources on build agent
-    "Installing required resources..."
-
-    #Workaround for bug in Install-Module cmdlet
-    if(!(Get-PackageProvider -Name NuGet -ListAvailable -ErrorAction Ignore))
-    {
-        Install-PackageProvider -Name NuGet -Force
-    }
-    
-    if (!(Get-PSRepository -Name PSGallery -ErrorAction Ignore))
-    {
-        Register-PSRepository -Name PSGallery -SourceLocation https://www.powershellgallery.com/api/v2/ -InstallationPolicy Trusted -PackageManagementProvider NuGet
-    }
-    
-    #End Workaround
-    
-    foreach ($Resource in $RequiredModules)
-    {
-        Install-Module -Name $Resource.Name -RequiredVersion $Resource.Version -Repository 'PSGallery' -Force
-        Save-Module -Name $Resource.Name -RequiredVersion $Resource.Version -Repository 'PSGallery' -Path $ModuleArtifactPath -Force
-    }
-}
-
-Task ScriptAnalysis -Depends InstallModules {
-    # Run Script Analyzer
-    "Starting static analysis..."
-    Invoke-ScriptAnalyzer -Path $ConfigPath
-
+Task BLIZZ 
+{
+    "testing 1, 2, 3."
 }
 
 
-Task BLIZZ -Depends ScriptAnalysis {
-    # Run Unit Tests with Code Coverage
-    "Starting unit tests..."
- 
-    $PesterResults = Invoke-Pester -path "$TestsPath\Unit\"  -CodeCoverage "$ConfigPath\*.ps1" -OutputFile "$TestResultsPath\UnitTest.xml" -OutputFormat NUnitXml -PassThru
-    
-    if($PesterResults.FailedCount) #If Pester fails any tests fail this task
-    {
-        Invoke-TestFailure -TestType Unit -PesterResults $PesterResults
-    }
-     
-}
 
-Task FOO -depends InstallModules 
+
+Task FOO -depends BLIZZ
+{
+    "this is FOO..."
+} 
 
 Task Clean {
     "Starting Cleaning enviroment..."
