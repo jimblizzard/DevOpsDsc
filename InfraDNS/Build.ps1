@@ -81,7 +81,7 @@ Task UnitTests -Depends ScriptAnalysis {
     {
         Invoke-TestFailure -TestType Unit -PesterResults $PesterResults
     }
-    
+     
 }
 
 Task CompileConfigs -Depends UnitTests {
