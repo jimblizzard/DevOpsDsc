@@ -1,6 +1,6 @@
 # Create the DNSServer MOF
 
-Write-Host "Conpiling DNSServer..."
+Write-Output "Conpiling DNSServer..."
 
 $ConfigPath = "$PSScriptRoot\Configs"
 
