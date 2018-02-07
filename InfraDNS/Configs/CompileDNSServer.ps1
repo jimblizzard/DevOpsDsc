@@ -6,6 +6,6 @@ $ConfigPath = "$PSScriptRoot\Configs"
 $ArtifactPath = "$Env:BUILD_ARTIFACTSTAGINGDIRECTORY"
 $MOFArtifactPath = "$ArtifactPath\MOF"
 
-. "$ConfigPath\DNSServer.ps1"
+Exec {$ . $ConfigPath\DNSServer.ps1}
 
 DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
