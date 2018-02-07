@@ -11,7 +11,7 @@ $DevEnvironment = @{
     Name                        = 'DevEnv'
     Roles = @(
         @{  Role                = 'WebServer'
-            VMName              = 'TestAgent1'
+            VMName              = 'bliztestagent1'
             Zone                = 'Contoso.com'
         }
     )
