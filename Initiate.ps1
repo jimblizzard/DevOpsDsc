@@ -1,6 +1,6 @@
 param(
     [parameter()]
-    [ValidateSet('Build','Deploy')]
+    [ValidateSet('Build','Deploy','Build2')]
     [string]
     $fileName
 )
