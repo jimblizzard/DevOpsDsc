@@ -1,8 +1,10 @@
 # Create the DNSServer MOF
 
-Write-Output "Conpiling DNSServer..."
+Write-Output "Compiling DNSServer..."
 
 $ConfigPath = "$PSScriptRoot\Configs"
+$ArtifactPath = "$Env:BUILD_ARTIFACTSTAGINGDIRECTORY"
+$MOFArtifactPath = "$ArtifactPath\MOF"
 
 . "$ConfigPath\DNSServer.ps1"
 
