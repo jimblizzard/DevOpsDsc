@@ -64,16 +64,16 @@ Describe 'DNS Server' {
     }
 
     context 'DNS records' {
-        It "Should have an A record for TestAgent1 (DNS Server)" {
-            (Get-DnsServerResourceRecord -Name TestAgent1 -ZoneName contoso.com).RecordData.Ipv4Address.IpAddressToString | Should be '10.0.0.40'
+        It "Should have an A record for blizTestAgent1 (DNS Server)" {
+            (Get-DnsServerResourceRecord -Name bliztestagent1 -ZoneName contoso.com).RecordData.Ipv4Address.IpAddressToString | Should be '10.0.0.40'
         }
 
-        It "Should have an A record for TestAgent2 (Web Server)" {
-            (Get-DnsServerResourceRecord -Name TestAgent2 -ZoneName contoso.com).RecordData.Ipv4Address.IpAddressToString | Should be '10.0.0.50'
+        It "Should have an A record for blizTestAgent2 (Web Server)" {
+            (Get-DnsServerResourceRecord -Name bliztestagent2 -ZoneName contoso.com).RecordData.Ipv4Address.IpAddressToString | Should be '10.0.0.50'
         }
 
-        It "Should have a CName record for DNS pointing to TestAgent1" {
-            (Get-DnsServerResourceRecord -Name dns -ZoneName contoso.com -ErrorAction SilentlyContinue).RecordData.HostNameAlias | Should match 'TestAgent1.'
+        It "Should have a CName record for DNS pointing to blizTestAgent1" {
+            (Get-DnsServerResourceRecord -Name dns -ZoneName contoso.com -ErrorAction SilentlyContinue).RecordData.HostNameAlias | Should match 'bliztestagent1.'
         }
     }
 }

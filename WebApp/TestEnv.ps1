@@ -7,10 +7,10 @@ $UnitTestEnvironment = @{
     Name                        = 'Test';
     Roles = @(
         @{  Role                = 'Website';
-            VMName              = 'TestAgent2';
+            VMName              = 'bliztestagent2';
         },
         @{  Role                = 'DNSServer';
-            VMName              = 'TestAgent1';
+            VMName              = 'bliztestagent1';
         }
     )
 }

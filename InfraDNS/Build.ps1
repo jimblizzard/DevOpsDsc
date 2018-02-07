@@ -85,14 +85,14 @@ Task UnitTests -Depends ScriptAnalysis {
     
 }
 
-#Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
-#    # Compile Configurations...
-#    "Starting to compile configuration..."
-#    . "$ConfigPath\DNSServer.ps1"
-#
-#    DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
-#    # Build steps for other environments can follow here.
-#}
+Task CompileConfigs -Depends UnitTests, ScriptAnalysis {
+    # Compile Configurations...
+    "Starting to compile configuration..."
+    . "$ConfigPath\DNSServer.ps1"
+
+    DNSServer -ConfigurationData "$ConfigPath\DevEnv.psd1" -OutputPath "$MOFArtifactPath\DevEnv\"
+    # Build steps for other environments can follow here.
+}
 
 Task Clean {
     "Starting Cleaning enviroment..."
